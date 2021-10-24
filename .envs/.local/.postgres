@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=roastery
+POSTGRES_USER=HBSbEyWNaFrapDxmeKuPaDcEgrPZglBE
+POSTGRES_PASSWORD=1fTLhrbjtPDgQpSatZnZSLqDo2UGvkYJsCnJtKWPEkSVY6TuWa5hNF7WQgaXolAW
