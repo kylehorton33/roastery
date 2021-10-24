@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Beans | Roastery{% endblock title %}
+
+{% block content %}
+<h2>Beans</h2>
+<ul>
+    {% for bean in bean_list %}
+    <li><a href="{% url 'coffee:bean-detail' bean.slug %}">
+        {{bean.name}}
+    </a></li>
+    {% endfor %}
+</ul>
+<hr/>
+<p>Don't see a bean? <a href="{% url 'coffee:bean-add' %}">Add</a> one!</p>
+{% endblock content %}

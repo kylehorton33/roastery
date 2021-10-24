@@ -16,6 +16,7 @@ urlpatterns = [
     path("users/", include("roastery.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
+    path("coffee/", include("roastery.coffee.urls", namespace="coffee")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
