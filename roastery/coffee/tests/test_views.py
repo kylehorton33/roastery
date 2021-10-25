@@ -42,3 +42,4 @@ def test_detail_contains_bean_data(rf):
     request = rf.get(reverse("coffee:bean-detail", kwargs={"slug": bean.slug}))
     response = BeanDetailView.as_view()(request, slug=bean.slug)
     assertContains(response, bean.name)
+    assertContains(response, bean.country.flag)

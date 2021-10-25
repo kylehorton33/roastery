@@ -13,4 +13,4 @@ class BeanDetailView(DetailView):
 
 class BeanCreateView(CreateView):
     model = Bean
-    fields = ["name"]
+    fields = ["name", "country"]

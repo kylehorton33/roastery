@@ -3,7 +3,7 @@
 {% block title %}{{ bean.name }} | Roastery{% endblock title %}
 
 {% block content %}
-<h2>{{ bean.name }}</h2>
+<h2>{{ bean.name }} <img src="{{ bean.country.flag }}"/></h2>
 <hr/>
 <p>Back to <a href="{% url 'coffee:bean-list' %}">all</a> beans</p>
 {% endblock content %}
