@@ -2,6 +2,22 @@
 
 {% block content %}
 <h3>Home</h3>
+{% if request.user.is_authenticated %}
+<h5>Welcome, {{ user.username }}
+    <a href="{% url 'account_logout' %}">
+        <span class="badge badge-secondary">Sign Out</span>
+    </a>
+</h5>
+{% else %}
+<h5>Welcome!
+    <a href="{% url 'account_login' %}">
+        <span class="badge badge-primary">Sign In</span>
+    </a>
+    <a href="{% url 'account_signup' %}">
+        <span class="badge badge-success">Sign Up</span>
+    </a>
+</h5>
+{% endif %}
 <hr>
 <h5>View latest:</h5>
 <ul>

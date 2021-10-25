@@ -12,5 +12,7 @@
     {% endfor %}
 </ul>
 <hr/>
-<p>Don't see a bean? <a href="{% url 'coffee:bean-add' %}">Add</a> one!</p>
+{% if request.user.is_authenticated %}
+    <p>Don't see a bean? <a href="{% url 'coffee:bean-add' %}">Add</a> one!</p>
+{% endif %}
 {% endblock content %}

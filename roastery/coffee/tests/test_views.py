@@ -1,4 +1,8 @@
 import pytest
+from django.contrib.auth.models import AnonymousUser
+from django.contrib.messages import get_messages
+from django.contrib.messages.middleware import MessageMiddleware
+from django.contrib.sessions.middleware import SessionMiddleware
 from django.urls import reverse
 from pytest_django.asserts import assertContains
 
@@ -43,3 +47,20 @@ def test_detail_contains_bean_data(rf):
     response = BeanDetailView.as_view()(request, slug=bean.slug)
     assertContains(response, bean.name)
     assertContains(response, bean.country.flag)
+
+
+def test_create_view_requires_login(rf):
+    request = rf.get(reverse("coffee:bean-add"), follow=True)
+    request.user = AnonymousUser()
+    middleware = SessionMiddleware()
+    middleware.process_request(request)
+    request.session.save()
+    middleware = MessageMiddleware()
+    middleware.process_request(request)
+    request.session.save()
+    response = BeanCreateView.as_view()(request)
+    assert response.status_code == 302  # Redirect status
+    assert (
+        list(get_messages(request))[0].message
+        == "You're not allowed on this page without an account"
+    )
