@@ -3,16 +3,31 @@
 {% block title %}Beans | Roastery{% endblock title %}
 
 {% block content %}
-<h2>Beans</h2>
-<ul>
-    {% for bean in bean_list %}
-    <li><a href="{% url 'coffee:bean-detail' bean.slug %}">
-        {{bean.name}}
-    </a></li>
-    {% endfor %}
-</ul>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Beans</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <ul>
+                {% for bean in bean_list %}
+                <li><a href="{% url 'coffee:bean-detail' bean.slug %}">
+                    {{bean.name}} <img src="{{ bean.country.flag }}"/>
+                </a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 <hr/>
 {% if request.user.is_authenticated %}
-    <p>Don't see a bean? <a href="{% url 'coffee:bean-add' %}">Add</a> one!</p>
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <p>Don't see a bean? <a href="{% url 'coffee:bean-add' %}">Add</a> one!</p>
+    </div>
+</div>
+
 {% endif %}
 {% endblock content %}

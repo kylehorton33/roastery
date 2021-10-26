@@ -27,3 +27,7 @@ class BeanCreateView(LoginRequiredWithErrorMessageMixin, CreateView):
     model = Bean
     fields = ["name", "country"]
     permission_denied_message = "You're not allowed on this page without an account"
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)

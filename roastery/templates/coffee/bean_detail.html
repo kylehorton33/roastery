@@ -3,7 +3,24 @@
 {% block title %}{{ bean.name }} | Roastery{% endblock title %}
 
 {% block content %}
-<h2>{{ bean.name }} <img src="{{ bean.country.flag }}"/></h2>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>{{ bean.name }}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <small>Created: {{ bean.created|date:"d M Y" }} by {{ bean.created_by.username }}</small>
+        </div>
+    </div>
+</div>
+
+
 <hr/>
-<p>Back to <a href="{% url 'coffee:bean-list' %}">all</a> beans</p>
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <p>Back to <a href="{% url 'coffee:bean-list' %}">all</a> beans</p>
+    </div>
+</div>
 {% endblock content %}
