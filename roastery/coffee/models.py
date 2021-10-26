@@ -12,6 +12,7 @@ class Bean(TimeStampedModel):
         "Bean URL slug", unique=True, always_update=False, populate_from="name"
     )
     country = CountryField("Country of Origin")
+    description = models.TextField("Description of Bean", blank=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name="Created by User",
