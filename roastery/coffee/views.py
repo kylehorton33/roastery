@@ -25,7 +25,7 @@ class BeanDetailView(DetailView):
 
 class BeanCreateView(LoginRequiredWithErrorMessageMixin, CreateView):
     model = Bean
-    fields = ["name", "country"]
+    fields = ["name", "country", "description"]
     permission_denied_message = "You're not allowed on this page without an account"
 
     def form_valid(self, form):
