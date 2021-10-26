@@ -39,6 +39,8 @@ def test_bean_list_contains_2_beans(rf):
     response = BeanListView.as_view()(request)
     assertContains(response, bean1)
     assertContains(response, bean2)
+    assertContains(response, bean1.country.flag)
+    assertContains(response, bean2.country.flag)
 
 
 def test_detail_contains_bean_data(rf):
@@ -46,7 +48,7 @@ def test_detail_contains_bean_data(rf):
     request = rf.get(reverse("coffee:bean-detail", kwargs={"slug": bean.slug}))
     response = BeanDetailView.as_view()(request, slug=bean.slug)
     assertContains(response, bean.name)
-    assertContains(response, bean.country.flag)
+    assertContains(response, bean.created_by)
 
 
 def test_create_view_requires_login(rf):
