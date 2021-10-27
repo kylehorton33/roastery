@@ -7,16 +7,34 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>{{ bean.name }}</h2>
+
         </div>
     </div>
     <div class="row">
         <div class="col-sm-12">
             <small>Created: {{ bean.created|date:"d M Y" }} by {{ bean.created_by.username }}</small>
+            {% if bean.modified > bean.created %}
+            <br>
+            <small>Last Modified: {{ bean.modified|date:"d M Y" }}</small>
+            {% endif %}
         </div>
     </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-12">
+            <h6>Origin: {{bean.country.name}} <img src="{{bean.country.flag}}" alt="{{bean.country.name}} flag"> </h6>
+            <p>{{ bean.description }}</p>
+        </div>
+    </div>
+
 </div>
-
-
+{% if request.user == bean.created_by %}
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'coffee:bean-update' bean.slug %}" class="btn btn-warning mx-2">Update</a>
+        </div>
+    </div>
+{% endif %}
 <hr/>
 <div class="container">
     <div class="d-flex justify-content-center">
