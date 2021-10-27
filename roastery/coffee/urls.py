@@ -21,4 +21,21 @@ urlpatterns = [
         view=views.BeanDeleteView.as_view(),
         name="bean-delete",
     ),
+    path(route="roasts/", view=views.RoastListView.as_view(), name="roast-list"),
+    path(route="roasts/add/", view=views.RoastCreateView.as_view(), name="roast-add"),
+    path(
+        route="roasts/<slug:slug>/",
+        view=views.RoastDetailView.as_view(),
+        name="roast-detail",
+    ),
+    path(
+        route="roasts/<slug:slug>/update/",
+        view=views.RoastUpdateView.as_view(),
+        name="roast-update",
+    ),
+    path(
+        route="roasts/<slug:slug>/delete/",
+        view=views.RoastDeleteView.as_view(),
+        name="roast-delete",
+    ),
 ]

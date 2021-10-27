@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ view.action|default:"Add" }} Roast | Roastery{% endblock title %}
+
+{% block content %}
+{% with action=view.action|default:"Add" %}
+<h2>{{action}} Roast</h2>
+<form method="post" action=".">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-{{ view.bootstrap_class|default:"success"}} mx-2">{{action}}</button>
+            {% if view.action == "Update" %}
+            <a href="{% url "coffee:roast-delete" roast.slug %}" class="btn btn-danger mx-2">Delete</a>
+            {% endif %}
+        </div>
+    </div>
+</form>
+{% endwith %}
+<hr>
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <p><a href="{{request.META.HTTP_REFERER}}">Cancel</a></p>
+    </div>
+</div>
+{% endblock content %}

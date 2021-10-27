@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Roasts | Roastery{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Roasts</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <ul>
+                {% for roast in roast_list %}
+                <li><a href="{% url 'coffee:roast-detail' roast.slug %}">
+                    {{ roast }} <img src="{{ roast.green_bean.country.flag }}"/>
+                </a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<hr/>
+{% if request.user.is_authenticated %}
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <p>Don't see a roast? <a href="{% url 'coffee:roast-add' %}">Add</a> one!</p>
+    </div>
+</div>
+
+{% endif %}
+{% endblock content %}

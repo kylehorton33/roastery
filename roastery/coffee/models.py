@@ -23,7 +23,6 @@ class Bean(TimeStampedModel):
         return self.name
 
     def get_absolute_url(self):
-        """Return absolute URL to the Bean Detail page."""
         return reverse("coffee:bean-detail", kwargs={"slug": self.slug})
 
 
@@ -50,6 +49,9 @@ class Roast(TimeStampedModel):
 
     def __str__(self):
         return f"{self.get_degree_display()} - {self.green_bean.name}"
+
+    def get_absolute_url(self):
+        return reverse("coffee:roast-detail", kwargs={"slug": self.slug})
 
 
 class Extraction(TimeStampedModel):

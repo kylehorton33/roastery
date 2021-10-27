@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ bean.name }} | Roastery{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>{{ roast }}</h2>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            {% load tz %}
+            {% timezone 'America/New_York' %}
+            <small>Created: {{ roast.created|date:"d M Y - h:i A" }} by {{ roast.created_by.username }}</small>
+            {% if roast.modified > roast.created %}
+            <br>
+            <small>Last Modified: {{ roast.modified|date:"d M Y - h:i A" }}</small>
+            {% endif %}
+            {% endtimezone %}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-12">
+            <h6>Origin: {{roast.green_bean.country.name}} <img src="{{roast.green_bean.country.flag}}" alt="{{roast.green_bean.country.name}} flag"> </h6>
+
+        </div>
+    </div>
+
+</div>
+{% if request.user == roast.created_by %}
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'coffee:roast-update' roast.slug %}" class="btn btn-warning mx-2">Update</a>
+        </div>
+    </div>
+{% endif %}
+<hr/>
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <p>Back to <a href="{% url 'coffee:roast-list' %}">all</a> roasts</p>
+    </div>
+</div>
+{% endblock content %}
