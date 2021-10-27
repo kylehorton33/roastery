@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from django.views.generic.edit import DeleteView
@@ -35,12 +35,15 @@ class BeanCreateView(LoginRequiredWithErrorMessageMixin, CreateView):
         return super().form_valid(form)
 
 
-class BeanUpdateView(LoginRequiredWithErrorMessageMixin, UpdateView):
+class BeanUpdateView(UserPassesTestMixin, UpdateView):
     model = Bean
     fields = ["name", "country", "description"]
-    permission_denied_message = "You're not allowed on this page without an account"
+    permission_denied_message = "You can't make updates from this account"
     action = "Update"
     bootstrap_class = "warning"
+
+    def test_func(self):
+        return self.request.user == self.get_object().created_by
 
 
 class BeanDeleteView(LoginRequiredWithErrorMessageMixin, DeleteView):
