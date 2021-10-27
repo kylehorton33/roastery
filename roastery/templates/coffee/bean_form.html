@@ -22,7 +22,7 @@
 <hr>
 <div class="container">
     <div class="d-flex justify-content-center">
-        <p>Back to <a href="{% url 'coffee:bean-list' %}">all</a> beans</p>
+        <p><a href="{{request.META.HTTP_REFERER}}">Cancel</a></p>
     </div>
 </div>
 {% endblock content %}
