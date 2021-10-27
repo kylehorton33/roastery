@@ -11,6 +11,15 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
+            <p>Sort by:
+                <a class="btn btn-dark btn-sm" href="?sort=-created">Newest</a>
+                <a class="btn btn-dark btn-sm" href="?sort=created">Oldest</a>
+                <a class="btn btn-dark btn-sm" href="?sort=-modified">Last Modified</a>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
             <ul>
                 {% for bean in bean_list %}
                 <li><a href="{% url 'coffee:bean-detail' bean.slug %}">

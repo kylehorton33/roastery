@@ -12,11 +12,14 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <small>Created: {{ bean.created|date:"d M Y" }} by {{ bean.created_by.username }}</small>
+            {% load tz %}
+            {% timezone 'America/New_York' %}
+            <small>Created: {{ bean.created|date:"d M Y - h:i A" }} by {{ bean.created_by.username }}</small>
             {% if bean.modified > bean.created %}
             <br>
-            <small>Last Modified: {{ bean.modified|date:"d M Y" }}</small>
+            <small>Last Modified: {{ bean.modified|date:"d M Y - h:i A" }}</small>
             {% endif %}
+            {% endtimezone %}
         </div>
     </div>
     <br>

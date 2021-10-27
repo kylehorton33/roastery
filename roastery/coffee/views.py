@@ -20,6 +20,9 @@ class LoginRequiredWithErrorMessageMixin(LoginRequiredMixin):
 class BeanListView(ListView):
     model = Bean
 
+    def get_ordering(self):
+        return self.request.GET.get("sort")
+
 
 class BeanDetailView(DetailView):
     model = Bean
