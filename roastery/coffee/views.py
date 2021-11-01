@@ -1,10 +1,16 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.views.generic import (
+    CreateView,
+    DetailView,
+    ListView,
+    TemplateView,
+    UpdateView,
+)
 from django.views.generic.edit import DeleteView
 
-from .models import Bean, Roast
+from .models import Bean, Extraction, Roast
 
 # CUSTOM MIXINS
 
@@ -17,6 +23,18 @@ class LoginRequiredWithErrorMessageMixin(LoginRequiredMixin):
             )
             return self.handle_no_permission()
         return super().dispatch(request, *args, **kwargs)
+
+
+# HOME VIEW
+class HomePageView(TemplateView):
+    template_name = "pages/home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HomePageView, self).get_context_data(**kwargs)
+        context["bean_count"] = Bean.objects.count()
+        context["roast_count"] = Roast.objects.count()
+        context["extraction_count"] = Extraction.objects.count()
+        return context
 
 
 # BEAN VIEWS
