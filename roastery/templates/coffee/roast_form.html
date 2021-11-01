@@ -29,6 +29,7 @@
 
 {% block inline_javascript %}
 <script>
+/// Get bean id from query parameters and select in drop-down
 function selectElement(id, valueToSelect) {
     let element = document.getElementById(id);
     element.value = valueToSelect;
@@ -40,5 +41,24 @@ const beanId = urlParams.get("bean");
 if (beanId) {
     selectElement("id_green_bean", beanId)
 }
+
+/// Get bean id from barcode scanner and select in drop-down
+let scanString = ""
+document.addEventListener('keypress', (event) => {
+    if (event.key != "Enter") {
+        scanString += event.key
+    } else {
+        let slug = scanString.split("/").slice(-2)[0]
+        let type = scanString.split("/").slice(-3)[0]
+        if (type == "beans") {
+            alert(`You scanned ${slug}, now just implement selection`) // this would be easier if slug and option value matched
+        } else {
+            alert("Please scan a valid bean!")
+        }
+    }
+    event.preventDefault()
+}, true)
+
+
 </script>
 {% endblock inline_javascript %}
