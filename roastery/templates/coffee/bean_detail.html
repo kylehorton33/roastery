@@ -31,13 +31,16 @@
     </div>
 
 </div>
-{% if request.user == bean.created_by %}
+
     <div class="container">
         <div class="d-flex justify-content-center">
+        {% if request.user == bean.created_by %}
             <a href="{% url 'coffee:bean-update' bean.slug %}" class="btn btn-warning mx-2">Update</a>
+        {% endif %}
+            <a href="{% url 'coffee:roast-add' %}?bean={{bean.id}}" class="btn btn-dark mx-2">Roast</a>
         </div>
     </div>
-{% endif %}
+
 <hr/>
 <div class="container">
     <div class="d-flex justify-content-center">

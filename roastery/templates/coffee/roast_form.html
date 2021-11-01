@@ -26,3 +26,19 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block inline_javascript %}
+<script>
+function selectElement(id, valueToSelect) {
+    let element = document.getElementById(id);
+    element.value = valueToSelect;
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+const beanId = urlParams.get("bean");
+
+if (beanId) {
+    selectElement("id_green_bean", beanId)
+}
+</script>
+{% endblock inline_javascript %}
