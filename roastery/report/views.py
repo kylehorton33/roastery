@@ -7,6 +7,8 @@ from django.http.response import Http404
 from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
 
+from config.settings.base import DEBUG
+from config.settings.local import ALLOWED_HOSTS
 from roastery.coffee.models import Bean
 
 
@@ -40,7 +42,11 @@ def generate_bean_label(request):
         box_size=10,
         border=4,
     )
-    qr.add_data(f"{bean.get_absolute_url()}")
+
+    host = f"https://{ALLOWED_HOSTS[0]}"  # this works in production if host is the only/first ALLOWED_HOST
+    if DEBUG:
+        host = f"http://{ALLOWED_HOSTS[-1]}:8000"  # if running locally, host is development machine
+    qr.add_data(f"{host}{bean.get_absolute_url()}")
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
 
