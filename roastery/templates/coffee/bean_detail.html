@@ -38,6 +38,12 @@
             <a href="{% url 'coffee:bean-update' bean.slug %}" class="btn btn-warning mx-2">Update</a>
         {% endif %}
             <a href="{% url 'coffee:roast-add' %}?bean={{bean.id}}" class="btn btn-dark mx-2">Roast</a>
+            <form action="{% url 'report:bean-label' %}" method="post">
+                {% csrf_token %}
+                {{ form }}
+                <input type="hidden" name="bean_id" value="{{bean.id}}">
+                <input type="submit" class="btn btn-primary mx-2" value="Label" />
+            </form>
         </div>
     </div>
 

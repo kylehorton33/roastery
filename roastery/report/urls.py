@@ -5,5 +5,5 @@ from . import views
 app_name = "report"
 
 urlpatterns = [
-    path("hello/", view=views.some_view, name="hello"),
+    path("bean-label/", view=views.generate_bean_label, name="bean-label"),
 ]

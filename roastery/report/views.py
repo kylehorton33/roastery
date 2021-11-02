@@ -1,25 +1,48 @@
 import io
+from datetime import datetime
 
 from django.http import FileResponse
+from django.http.response import Http404
+from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
 
+from roastery.coffee.models import Bean
 
-def some_view(request):
-    # Create a file-like buffer to receive PDF data.
+
+def generate_bean_label(request):
+
+    bean_id = request.POST.get("bean_id")
+
+    try:
+        bean = Bean.objects.get(id=bean_id)
+    except Bean.DoesNotExist:
+        raise Http404("Bean does not exist")
+
     buffer = io.BytesIO()
 
-    # Create the PDF object, using the buffer as its "file."
-    p = canvas.Canvas(buffer)
+    pagesize = (4 * inch, 2.12 * inch)  # label for dymo printer
 
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
-    p.drawString(100, 100, "Hello world.")
+    c = canvas.Canvas(buffer, pagesize=pagesize)
 
-    # Close the PDF object cleanly, and we're done.
-    p.showPage()
-    p.save()
+    text_object = c.beginText()
+    text_object.setTextOrigin(0.2 * inch, 0.2 * inch)
+    text_object.setFont("Helvetica", 12)
 
-    # FileResponse sets the Content-Disposition header so that browsers
-    # present the option to save the file.
+    lines = [
+        f"Name: {bean.name}",
+        f"Origin: {bean.country.name}",
+    ]
+
+    for line in lines:
+        text_object.textLine(line)
+
+    c.drawText(text_object)
+
+    c.showPage()
+    c.save()
+
+    now = datetime.now().strftime("%Y%m%d-%H%M%S")
+
+    # auto-download behavior is a product of browser settings, not Django app
     buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename="hello.pdf")
+    return FileResponse(buffer, as_attachment=False, filename=f"{now}.pdf")
