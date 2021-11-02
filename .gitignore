@@ -278,3 +278,4 @@ roastery/media/
 .env
 .envs/*
 !.envs/.local/
+config/settings/local.py
