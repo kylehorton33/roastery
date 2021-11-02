@@ -25,7 +25,7 @@ def generate_bean_label(request):
     c = canvas.Canvas(buffer, pagesize=pagesize)
 
     text_object = c.beginText()
-    text_object.setTextOrigin(0.2 * inch, 0.2 * inch)
+    text_object.setTextOrigin(0.2 * inch, 1.8 * inch)
     text_object.setFont("Helvetica", 12)
 
     lines = [
@@ -43,6 +43,5 @@ def generate_bean_label(request):
 
     now = datetime.now().strftime("%Y%m%d-%H%M%S")
 
-    # auto-download behavior is a product of browser settings, not Django app
     buffer.seek(0)
     return FileResponse(buffer, as_attachment=False, filename=f"{now}.pdf")
