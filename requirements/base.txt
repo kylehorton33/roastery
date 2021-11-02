@@ -18,3 +18,4 @@ django-redis==5.0.0  # https://github.com/jazzband/django-redis
 
 # Other Third-Party Apps
 django-countries==7.2.1 # https://github.com/SmileyChris/django-countries
+reportlab==3.6.2 # https://www.reportlab.com
