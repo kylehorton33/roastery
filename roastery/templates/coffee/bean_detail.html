@@ -38,12 +38,9 @@
             <a href="{% url 'coffee:bean-update' bean.slug %}" class="btn btn-warning mx-2">Update</a>
         {% endif %}
             <a href="{% url 'coffee:roast-add' %}?bean={{bean.id}}" class="btn btn-dark mx-2">Roast</a>
-            <form action="{% url 'report:bean-label' %}" method="post" target="_blank">
-                {% csrf_token %}
-                {{ form }}
-                <input type="hidden" name="bean_id" value="{{bean.id}}">
-                <input type="submit" class="btn btn-primary mx-2" value="Label" />
-            </form>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#labelModal">
+                Label
+            </button>
         </div>
     </div>
 
@@ -54,3 +51,33 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block modal %}
+<div class="modal fade" id="labelModal" tabindex="-1" role="dialog" aria-labelledby="labelModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="labelModalLongTitle">Generate Label for {{ bean.name }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{% url 'report:bean-label' %}" method="post" target="_blank">
+      <div class="modal-body">
+        {% csrf_token %}
+        <input type="hidden" name="bean_id" value="{{bean.id}}">
+        <label for="size">Select a size:</label><br>
+        <select name="size" id="size">
+          <option value="4x2.12">4 x 2.12</option>
+          <option value="8.5x11">Letter</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary mx-2" value="Label" />
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock modal %}

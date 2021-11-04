@@ -25,6 +25,8 @@ def make_qr_code(data):
 def generate_bean_label(request):
 
     bean_id = request.POST.get("bean_id")
+    size = request.POST.get("size")
+    width, height = float(size.split("x")[0]), float(size.split("x")[1])
 
     try:
         bean = Bean.objects.get(id=bean_id)
@@ -33,7 +35,7 @@ def generate_bean_label(request):
 
     buffer = io.BytesIO()
 
-    pagesize = (4 * inch, 2.12 * inch)  # label for dymo printer
+    pagesize = (width * inch, height * inch)  # label for dymo printer
 
     c = canvas.Canvas(buffer, pagesize=pagesize)
 
