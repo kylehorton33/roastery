@@ -2,13 +2,24 @@ import io
 from datetime import datetime
 
 import qrcode
-from django.conf import settings
 from django.http import FileResponse
 from django.http.response import Http404
 from reportlab.lib.units import inch
 from reportlab.pdfgen import canvas
 
 from roastery.coffee.models import Bean
+
+
+def make_qr_code(data):
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(data)
+    qr.make(fit=True)
+    return qr.make_image(fill_color="black", back_color="white")
 
 
 def generate_bean_label(request):
@@ -30,24 +41,14 @@ def generate_bean_label(request):
     text_object.setTextOrigin(0.2 * inch, 1.6 * inch)
     text_object.setFont("Helvetica", 12)
 
+    data = bean.get_label_data()
+
     lines = [
-        f"Name: {bean.name}",
-        f"Origin: {bean.country.name}",
+        f"Name: {data['name']}",
+        f"Origin: {data['origin']}",
     ]
 
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-    )
-
-    host = f"https://{settings.ALLOWED_HOSTS[0]}"  # this works in production if host is the only/first ALLOWED_HOST
-    if settings.DEBUG:
-        host = f"http://{settings.ALLOWED_HOSTS[-1]}:8000"  # if running locally, host is development machine
-    qr.add_data(f"{host}{bean.get_absolute_url()}")
-    qr.make(fit=True)
-    img = qr.make_image(fill_color="black", back_color="white")
+    img = make_qr_code(data["url"])
 
     for line in lines:
         text_object.textLine(line)
