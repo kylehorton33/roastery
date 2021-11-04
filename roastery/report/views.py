@@ -39,30 +39,23 @@ def generate_bean_label(request):
 
     c = canvas.Canvas(buffer, pagesize=pagesize)
 
-    text_object = c.beginText()
-    text_object.setTextOrigin(0.2 * inch, 1.6 * inch)
-    text_object.setFont("Helvetica", 12)
+    c.setFont("Helvetica", 12)
 
     data = bean.get_label_data()
-
-    lines = [
-        f"Name: {data['name']}",
-        f"Origin: {data['origin']}",
-    ]
+    now = datetime.now()
+    label_timestamp = now.strftime("%a %d %b %Y %H:%M:%S UTC")
+    filename = now.strftime("Label-%Y%m%d_%H%M%S")
 
     img = make_qr_code(data["url"])
 
-    for line in lines:
-        text_object.textLine(line)
-
-    c.drawText(text_object)
-
+    c.drawString(0.2 * inch, 1.6 * inch, f"Name: {data['name']}")
+    c.drawString(0.2 * inch, 1.3 * inch, f"Origin: {data['origin']}")
     c.drawInlineImage(img, 2.4 * inch, 0.5 * inch, 1.3 * inch, 1.3 * inch)
+    c.setFont("Helvetica", 8)
+    c.drawString(0.2 * inch, 0.2 * inch, f"Label Generated: {label_timestamp}")
 
     c.showPage()
     c.save()
 
-    now = datetime.now().strftime("%Y%m%d-%H%M%S")
-
     buffer.seek(0)
-    return FileResponse(buffer, as_attachment=False, filename=f"{now}.pdf")
+    return FileResponse(buffer, as_attachment=False, filename=f"{filename}.pdf")
