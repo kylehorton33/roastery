@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>{{ extraction }}</h2>
-            <img src="{% static 'images/default/portafilter.png' %}" alt="Portafilter" height="150" width="150">
+            <img src="{{ extraction.get_image }}" alt="Portafilter" height="150" width="150">
         </div>
     </div>
     <div class="row">

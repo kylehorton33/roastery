@@ -121,9 +121,23 @@ class Extraction(TimeStampedModel):
         verbose_name="Created by User",
         on_delete=models.CASCADE,
     )
+    image = models.ImageField(upload_to="extraction/", null=True)
+
+    def get_default_image(self, method):
+        return {
+            "espresso": "/static/images/default/portafilter.png",
+            "v60": "/static/images/default/v60.png",
+            "chemex": "/static/images/default/chemex.png",
+        }[method]
 
     def __str__(self):
         return f"{self.get_method_display()}: {self.roasted_bean}"
 
     def get_absolute_url(self):
         return reverse("coffee:extraction-detail", kwargs={"slug": self.slug})
+
+    def get_image(self):
+        if self.image:
+            return self.image.url
+        else:
+            return self.get_default_image(self.method)
