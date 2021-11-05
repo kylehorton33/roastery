@@ -44,13 +44,11 @@
     <div class="d-flex justify-content-center">
         <p>Back to <a href="{% url 'coffee:extraction-list' %}">all</a> extractions</p>
     </div>
-    <div class="row">
-      <p>Portafilter icon made by <a href="https://www.flaticon.com/authors/ultimatearm" title="ultimatearm">ultimatearm</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></p>
-      <p>Chemex icon made by <a href="https://www.flaticon.com/authors/pojok-d" title="pojok d">pojok d</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></p>
-      <p>V60 icon made by <a href="https://www.flaticon.com/authors/arana-stock" title="Arana_Stock">Arana_Stock</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></p>
-      <p>French Press icon made by <a href="https://www.flaticon.com/authors/xnimrodx" title="xnimrodx">xnimrodx</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></p>
+    {% if not extraction.image %}
+    <div class="d-flex justify-content-center">
+        {{ extraction.get_image_credit|safe }}
     </div>
-
-
+    {% endif %}
+    <div class="row">
 </div>
 {% endblock content %}

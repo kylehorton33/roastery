@@ -125,9 +125,30 @@ class Extraction(TimeStampedModel):
 
     def get_default_image(self, method):
         return {
-            "espresso": "/static/images/default/portafilter.png",
-            "v60": "/static/images/default/v60.png",
-            "chemex": "/static/images/default/chemex.png",
+            "espresso": {
+                "uri": "/static/images/default/portafilter.png",
+                "credit": '<p>Portafilter icon made by <a href="https://www.flaticon.com/authors/ultimatearm" \
+                    title="ultimatearm">ultimatearm</a> from <a href="https://www.flaticon.com/" \
+                    title="Flaticon">www.flaticon.com</a></p>',
+            },
+            "chemex": {
+                "uri": "/static/images/default/chemex.png",
+                "credit": '<p>Chemex icon made by <a href="https://www.flaticon.com/authors/pojok-d" \
+                    title="pojok d">pojok d</a> from <a href="https://www.flaticon.com/" \
+                    title="Flaticon">www.flaticon.com</a></p>',
+            },
+            "v60": {
+                "uri": "/static/images/default/v60.png",
+                "credit": '<p>V60 icon made by <a href="https://www.flaticon.com/authors/arana-stock" \
+                    title="Arana_Stock">Arana_Stock</a> from <a href="https://www.flaticon.com/" \
+                    title="Flaticon">www.flaticon.com</a></p>',
+            },
+            "french-press": {
+                "uri": "/static/images/default/french-press.png",
+                "credit": '<p>French Press icon made by <a href="https://www.flaticon.com/authors/xnimrodx" \
+                    title="xnimrodx">xnimrodx</a> from <a href="https://www.flaticon.com/" \
+                    title="Flaticon">www.flaticon.com</a></p>',
+            },
         }[method]
 
     def __str__(self):
@@ -140,4 +161,8 @@ class Extraction(TimeStampedModel):
         if self.image:
             return self.image.url
         else:
-            return self.get_default_image(self.method)
+            return self.get_default_image(self.method)["uri"]
+
+    def get_image_credit(self):
+        if not self.image:
+            return self.get_default_image(self.method)["credit"]
