@@ -89,6 +89,7 @@ class Extraction(TimeStampedModel):
         ESPRESSO = "espresso", "Espresso"
         V60 = "v60", "V60"
         CHEMEX = "chemex", "Chemex"
+        FRENCH_PRESS = "french-press", "French Press"
 
     class Grinder(models.TextChoices):
         NICHE_ZERO = "niche-zero", "Niche Zero"
