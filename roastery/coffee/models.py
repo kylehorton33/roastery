@@ -22,6 +22,9 @@ class Bean(TimeStampedModel):
     def __str__(self):
         return self.name
 
+    def roasts(self):
+        return Roast.objects.filter(green_bean=self.id)
+
     def get_absolute_url(self):
         return reverse("coffee:bean-detail", kwargs={"slug": self.slug})
 

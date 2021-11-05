@@ -29,6 +29,20 @@
             <p>{{ bean.description }}</p>
         </div>
     </div>
+    <!-- Links to past roasts -->
+    {% if bean.roasts %}
+    <div class="row">
+      <div class="col-sm-12">
+        <h6>Past Roasts:</h6>
+        <ul>
+          {% for roast in bean.roasts %}
+            <li><a href="{% url 'coffee:roast-detail' roast.slug %}">{{ roast }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+
 
 </div>
 
