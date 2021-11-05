@@ -26,3 +26,21 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block inline_javascript %}
+<script>
+/// Get roast id from query parameters and select in drop-down
+function selectElement(id, valueToSelect) {
+    let element = document.getElementById(id);
+    element.value = valueToSelect;
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+const roastId = urlParams.get("roast");
+
+if (roastId) {
+    selectElement("id_roasted_bean", roastId)
+}
+
+</script>
+{% endblock inline_javascript %}
