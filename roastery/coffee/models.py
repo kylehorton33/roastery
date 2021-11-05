@@ -2,6 +2,7 @@ from autoslug import AutoSlugField
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 from django_countries.fields import CountryField
 from model_utils.models import TimeStampedModel
 
@@ -51,6 +52,7 @@ class Roast(TimeStampedModel):
     slug = AutoSlugField(
         "Roast URL slug", unique=True, always_update=False, populate_from="__str__"
     )
+    roast_date = models.DateField(default=timezone.now)
     degree = models.CharField("Degree of Roast", max_length=20, choices=Degree.choices)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -76,6 +78,7 @@ class Roast(TimeStampedModel):
             "name": self.green_bean,
             "roast": self.get_degree_display(),
             "origin": self.green_bean.country.name,
+            "roast_date": self.roast_date,
             "url": full_url,
         }
         return data

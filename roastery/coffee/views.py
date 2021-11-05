@@ -100,7 +100,7 @@ class RoastCreateView(LoginRequiredWithErrorMessageMixin, CreateView):
 
 class RoastUpdateView(UserPassesTestMixin, UpdateView):
     model = Roast
-    fields = ["green_bean", "degree"]
+    fields = ["green_bean", "degree", "roast_date"]
     permission_denied_message = "You can't make updates from this account"
     action = "Update"
     bootstrap_class = "warning"

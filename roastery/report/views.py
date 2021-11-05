@@ -88,8 +88,9 @@ def generate_roast_label(request):
     img = make_qr_code(data["url"])
 
     c.drawString(0.2 * inch, 1.6 * inch, f"Name: {data['name']}")
-    c.drawString(0.2 * inch, 1.3 * inch, f"Origin: {data['origin']}")
-    c.drawString(0.2 * inch, 1.0 * inch, f"Roast: {data['roast']}")
+    c.drawString(0.2 * inch, 1.4 * inch, f"Origin: {data['origin']}")
+    c.drawString(0.2 * inch, 1.2 * inch, f"Roast: {data['roast']}")
+    c.drawString(0.2 * inch, 0.8 * inch, f"Roasted On: {data['roast_date']}")
     c.drawInlineImage(img, 2.4 * inch, 0.5 * inch, 1.3 * inch, 1.3 * inch)
     c.setFont("Helvetica", 8)
     c.drawString(0.2 * inch, 0.2 * inch, f"Label Generated: {label_timestamp}")
