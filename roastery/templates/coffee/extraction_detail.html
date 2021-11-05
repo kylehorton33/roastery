@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ extraction }} | Roastery{% endblock title %}
 
@@ -7,7 +8,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>{{ extraction }}</h2>
-
+            <img src="{% static 'images/default/portafilter.png' %}" alt="Portafilter" height="150" width="150">
         </div>
     </div>
     <div class="row">
@@ -41,7 +42,15 @@
 <hr/>
 <div class="container">
     <div class="d-flex justify-content-center">
-        <p>Back to <a href="{% url 'coffee:extraction-list' %}">all</a> extraction</p>
+        <p>Back to <a href="{% url 'coffee:extraction-list' %}">all</a> extractions</p>
     </div>
+    <div class="row">
+      <p>Portafilter icon made by <a href="https://www.flaticon.com/authors/ultimatearm" title="ultimatearm">ultimatearm</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></p>
+      <p>Chemex icon made by <a href="https://www.flaticon.com/authors/pojok-d" title="pojok d">pojok d</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></p>
+      <p>V60 icon made by <a href="https://www.flaticon.com/authors/arana-stock" title="Arana_Stock">Arana_Stock</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></p>
+      <p>French Press icon made by <a href="https://www.flaticon.com/authors/xnimrodx" title="xnimrodx">xnimrodx</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></p>
+    </div>
+
+
 </div>
 {% endblock content %}
