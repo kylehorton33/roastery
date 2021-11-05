@@ -44,7 +44,30 @@ roast_urlpatterns = [
     ),
 ]
 
+extraction_urlpatterns = [
+    path(route="", view=views.ExtractionListView.as_view(), name="extraction-list"),
+    path(
+        route="add/", view=views.ExtractionCreateView.as_view(), name="extraction-add"
+    ),
+    path(
+        route="<slug:slug>/",
+        view=views.ExtractionDetailView.as_view(),
+        name="extraction-detail",
+    ),
+    path(
+        route="<slug:slug>/update/",
+        view=views.ExtractionUpdateView.as_view(),
+        name="extraction-update",
+    ),
+    path(
+        route="<slug:slug>/delete/",
+        view=views.ExtractionDeleteView.as_view(),
+        name="extraction-delete",
+    ),
+]
+
 urlpatterns = [
     path("beans/", include(bean_urlpatterns)),
     path("roasts/", include(roast_urlpatterns)),
+    path("extractions/", include(extraction_urlpatterns)),
 ]

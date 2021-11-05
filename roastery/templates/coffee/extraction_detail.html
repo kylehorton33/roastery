@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ extraction }} | Roastery{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>{{ extraction }}</h2>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            {% load tz %}
+            {% timezone 'America/New_York' %}
+            <small>Created: {{ extraction.created|date:"d M Y - h:i A" }} by {{ extraction.created_by.username }}</small>
+            {% if extraction.modified > extraction.created %}
+            <br>
+            <small>Last Modified: {{ extraction.modified|date:"d M Y - h:i A" }}</small>
+            {% endif %}
+            {% endtimezone %}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-12">
+            <h6>Origin: {{extraction.roasted_bean.green_bean.country.name}} <img src="{{extraction.roasted_bean.green_bean.country.flag}}" alt="{{roast.green_bean.country.name}} flag"> </h6>
+
+        </div>
+    </div>
+
+</div>
+{% if request.user == extraction.created_by %}
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'coffee:extraction-update' extraction.slug %}" class="btn btn-warning mx-2">Update</a>
+        </div>
+    </div>
+{% endif %}
+<hr/>
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <p>Back to <a href="{% url 'coffee:extraction-list' %}">all</a> extraction</p>
+    </div>
+</div>
+{% endblock content %}

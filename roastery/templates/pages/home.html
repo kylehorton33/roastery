@@ -23,6 +23,6 @@
 <ul>
     <li><a href="{% url 'coffee:bean-list' %}">Beans <small>({{bean_count}})</small></a></li>
     <li><a href="{% url 'coffee:roast-list' %}">Roasts <small>({{roast_count}})</small></a></li>
-    <li><a href="#TODO">Extraction <small>({{extraction_count}})</small></a></li>
+    <li><a href="{% url 'coffee:extraction-list' %}">Extractions <small>({{extraction_count}})</small></a></li>
 </ul>
 {% endblock content %}

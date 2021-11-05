@@ -76,6 +76,9 @@ class Extraction(TimeStampedModel):
     roasted_bean = models.ForeignKey(
         Roast, verbose_name="Roasted Bean", on_delete=models.CASCADE
     )
+    slug = AutoSlugField(
+        "Extraction URL slug", unique=True, always_update=False, populate_from="__str__"
+    )
     method = models.CharField(
         "Method of Extraction",
         max_length=20,
@@ -99,3 +102,6 @@ class Extraction(TimeStampedModel):
 
     def __str__(self):
         return f"{self.get_method_display()}: {self.roasted_bean}"
+
+    def get_absolute_url(self):
+        return reverse("coffee:extraction-detail", kwargs={"slug": self.slug})

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Extractions | Roastery{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Extractions</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <ul>
+                {% for extraction in extraction_list %}
+                <li><a href="{% url 'coffee:extraction-detail' extraction.slug %}">
+                    {{ extraction }} <img src="{{ extraction.roasted_bean.green_bean.country.flag }}"/>
+                </a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<hr/>
+{% if request.user.is_authenticated %}
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <p>Don't see an extraction? <a href="{% url 'coffee:extraction-add' %}">Add</a> one!</p>
+    </div>
+</div>
+
+{% endif %}
+{% endblock content %}
