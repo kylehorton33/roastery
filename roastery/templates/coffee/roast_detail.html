@@ -29,6 +29,19 @@
 
         </div>
     </div>
+    <!-- Links to past extractions -->
+    {% if roast.extractions %}
+    <div class="row">
+      <div class="col-sm-12">
+        <h6>Past Extractions:</h6>
+        <ul>
+          {% for extraction in roast.extractions %}
+            <li><a href="{% url 'coffee:extraction-detail' extraction.slug %}">{{ extraction }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    {% endif %}
 
 </div>
 <div class="container">

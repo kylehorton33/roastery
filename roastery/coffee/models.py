@@ -64,6 +64,9 @@ class Roast(TimeStampedModel):
     def get_absolute_url(self):
         return reverse("coffee:roast-detail", kwargs={"slug": self.slug})
 
+    def extractions(self):
+        return Extraction.objects.filter(roasted_bean=self.id)
+
     def get_label_data(self):
         host = f"https://{settings.ALLOWED_HOSTS[0]}"  # this works in production if host is the only/first ALLOWED_HOST
         if settings.DEBUG:
