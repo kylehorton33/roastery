@@ -10,6 +10,7 @@ from django.views.generic import (
 )
 from django.views.generic.edit import DeleteView
 
+from .forms import RoastForm
 from .models import Bean, Extraction, Roast
 
 # CUSTOM MIXINS
@@ -100,7 +101,7 @@ class RoastCreateView(LoginRequiredWithErrorMessageMixin, CreateView):
 
 class RoastUpdateView(UserPassesTestMixin, UpdateView):
     model = Roast
-    fields = ["green_bean", "degree", "roast_date"]
+    form_class = RoastForm
     permission_denied_message = "You can't make updates from this account"
     action = "Update"
     bootstrap_class = "warning"
