@@ -91,7 +91,7 @@ class RoastDetailView(DetailView):
 
 class RoastCreateView(LoginRequiredWithErrorMessageMixin, CreateView):
     model = Roast
-    fields = ["green_bean", "degree"]
+    fields = ["green_bean", "degree", "green_weight", "roasted_weight"]
     permission_denied_message = "You're not allowed on this page without an account"
 
     def form_valid(self, form):
@@ -128,7 +128,15 @@ class ExtractionDetailView(DetailView):
 
 class ExtractionCreateView(LoginRequiredWithErrorMessageMixin, CreateView):
     model = Extraction
-    fields = ["roasted_bean", "method", "grinder", "grind_setting", "temperature"]
+    fields = [
+        "roasted_bean",
+        "method",
+        "dose",
+        "grinder",
+        "grind_setting",
+        "temperature",
+        "notes",
+    ]
     permission_denied_message = "You're not allowed on this page without an account"
 
     def form_valid(self, form):
@@ -138,7 +146,15 @@ class ExtractionCreateView(LoginRequiredWithErrorMessageMixin, CreateView):
 
 class ExtractionUpdateView(UserPassesTestMixin, UpdateView):
     model = Extraction
-    fields = ["roasted_bean", "method", "grinder", "grind_setting", "temperature"]
+    fields = [
+        "roasted_bean",
+        "method",
+        "dose",
+        "grinder",
+        "grind_setting",
+        "temperature",
+        "notes",
+    ]
     permission_denied_message = "You can't make updates from this account"
     action = "Update"
     bootstrap_class = "warning"

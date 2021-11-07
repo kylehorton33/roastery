@@ -53,6 +53,12 @@ class Roast(TimeStampedModel):
         "Roast URL slug", unique=True, always_update=False, populate_from="__str__"
     )
     roast_date = models.DateField(default=timezone.now)
+    green_weight = models.DecimalField(
+        "Bean Mass (pre-roast) [g]", decimal_places=1, max_digits=5
+    )
+    roasted_weight = models.DecimalField(
+        "Bean Mass (post-roast) [g]", decimal_places=1, max_digits=5
+    )
     degree = models.CharField("Degree of Roast", max_length=20, choices=Degree.choices)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -68,6 +74,9 @@ class Roast(TimeStampedModel):
 
     def extractions(self):
         return Extraction.objects.filter(roasted_bean=self.id)
+
+    def weight_loss(self):
+        return (self.green_weight - self.roasted_weight) / self.green_weight
 
     def get_label_data(self):
         host = f"https://{settings.ALLOWED_HOSTS[0]}"  # this works in production if host is the only/first ALLOWED_HOST
@@ -111,6 +120,7 @@ class Extraction(TimeStampedModel):
     grinder = models.CharField(
         "Grinder", max_length=20, choices=Grinder.choices, default=Grinder.NICHE_ZERO
     )
+    dose = models.DecimalField("Dose Weight [g]", decimal_places=1, max_digits=3)
     grind_setting = models.DecimalField(
         "Grinder Coarseness Setting", decimal_places=1, max_digits=3
     )
@@ -123,6 +133,7 @@ class Extraction(TimeStampedModel):
         on_delete=models.CASCADE,
     )
     image = models.ImageField(upload_to="extraction/", null=True)
+    notes = models.TextField("Extra Notes", blank=True)
 
     def get_default_image(self, method):
         return {
