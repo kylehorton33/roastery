@@ -67,7 +67,7 @@ class Roast(TimeStampedModel):
     )
 
     def __str__(self):
-        return f"{self.get_degree_display()} - {self.green_bean.name}"
+        return f"{self.green_bean.name} ({self.get_degree_display()} Roast)"
 
     def get_absolute_url(self):
         return reverse("coffee:roast-detail", kwargs={"slug": self.slug})
@@ -76,7 +76,8 @@ class Roast(TimeStampedModel):
         return Extraction.objects.filter(roasted_bean=self.id)
 
     def weight_loss(self):
-        return (self.green_weight - self.roasted_weight) / self.green_weight
+        loss = (self.green_weight - self.roasted_weight) / self.green_weight
+        return round(loss * 100, 1)
 
     def get_label_data(self):
         host = f"https://{settings.ALLOWED_HOSTS[0]}"  # this works in production if host is the only/first ALLOWED_HOST

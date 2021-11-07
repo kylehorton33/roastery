@@ -7,8 +7,17 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h2>{{ roast }}</h2>
             <img src="{% static 'images/default/roasted-beans.png' %}" alt="Bean Image" height="150" width="150">
+            <h4>{{ roast }}</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h6>Origin: {{roast.green_bean.country.name}} <img src="{{roast.green_bean.country.flag}}" alt="{{roast.green_bean.country.name}} flag"> </h6>
+            <h6>Roasted: {{ roast.roast_date }} ({{ roast.roast_date|timesince}} ago)</h6>
+            <h6>Weight Loss: {{ roast.weight_loss }}% ({{ roast.green_weight }} g batch)</h6>
+            <br>
+            <h6>Current Weight: {{ roast.roasted_weight }} g</h6>
         </div>
     </div>
     <div class="row">
@@ -24,13 +33,6 @@
         </div>
     </div>
     <br>
-    <div class="row">
-        <div class="col-sm-12">
-            <h6>Origin: {{roast.green_bean.country.name}} <img src="{{roast.green_bean.country.flag}}" alt="{{roast.green_bean.country.name}} flag"> </h6>
-            <h6>Roasted On: {{ roast.roast_date }}</h6>
-
-        </div>
-    </div>
     <!-- Links to past extractions -->
     {% if roast.extractions %}
     <div class="row">

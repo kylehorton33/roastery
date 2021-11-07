@@ -7,8 +7,18 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h2>{{ extraction }}</h2>
             <img src="{{ extraction.get_image }}" alt="Portafilter" height="150" width="150">
+            <h4>{{ extraction.roasted_bean }}</h4>
+            <h4>{{ extraction.get_method_display }}</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h6>Origin: {{extraction.roasted_bean.green_bean.country.name}} <img src="{{extraction.roasted_bean.green_bean.country.flag}}" alt="{{roast.green_bean.country.name}} flag"> </h6>
+            <h6>Dose: {{ extraction.dose }} g</h6>
+            <h6>Grind: {{ extraction.get_grinder_display }} ({{ extraction.grind_setting }})</h6>
+            <h6>Temp: {{ extraction.temperature }} C</h6>
+            <h6>Extra Notes: {{ extration.notes }}</h6>
         </div>
     </div>
     <div class="row">
@@ -24,31 +34,23 @@
         </div>
     </div>
     <br>
-    <div class="row">
-        <div class="col-sm-12">
-            <h6>Origin: {{extraction.roasted_bean.green_bean.country.name}} <img src="{{extraction.roasted_bean.green_bean.country.flag}}" alt="{{roast.green_bean.country.name}} flag"> </h6>
-
-        </div>
     </div>
-
-</div>
-{% if request.user == extraction.created_by %}
+    {% if request.user == extraction.created_by %}
+        <div class="container">
+            <div class="d-flex justify-content-center">
+                <a href="{% url 'coffee:extraction-update' extraction.slug %}" class="btn btn-warning mx-2">Update</a>
+            </div>
+        </div>
+    {% endif %}
+    <hr/>
     <div class="container">
         <div class="d-flex justify-content-center">
-            <a href="{% url 'coffee:extraction-update' extraction.slug %}" class="btn btn-warning mx-2">Update</a>
+            <p>Back to <a href="{% url 'coffee:extraction-list' %}">all</a> extractions</p>
         </div>
+        {% if not extraction.image %}
+        <div class="d-flex justify-content-center">
+            {{ extraction.get_image_credit|safe }}
+        </div>
+        {% endif %}
     </div>
-{% endif %}
-<hr/>
-<div class="container">
-    <div class="d-flex justify-content-center">
-        <p>Back to <a href="{% url 'coffee:extraction-list' %}">all</a> extractions</p>
-    </div>
-    {% if not extraction.image %}
-    <div class="d-flex justify-content-center">
-        {{ extraction.get_image_credit|safe }}
-    </div>
-    {% endif %}
-    <div class="row">
-</div>
 {% endblock content %}
