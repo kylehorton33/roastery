@@ -59,6 +59,9 @@ class Roast(TimeStampedModel):
     roasted_weight = models.DecimalField(
         "Bean Mass (post-roast) [g]", decimal_places=1, max_digits=5
     )
+    current_weight = models.DecimalField(
+        "Current Mass [g]", decimal_places=1, max_digits=5
+    )
     degree = models.CharField("Degree of Roast", max_length=20, choices=Degree.choices)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -78,6 +81,14 @@ class Roast(TimeStampedModel):
     def weight_loss(self):
         loss = (self.green_weight - self.roasted_weight) / self.green_weight
         return round(loss * 100, 1)
+
+    def decrement(self, amount):
+        if amount > self.current_weight:
+            return self.current_weight
+        else:
+            self.current_weight -= amount
+            self.save()
+            return None
 
     def get_label_data(self):
         host = f"https://{settings.ALLOWED_HOSTS[0]}"  # this works in production if host is the only/first ALLOWED_HOST

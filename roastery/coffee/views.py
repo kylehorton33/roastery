@@ -96,6 +96,9 @@ class RoastCreateView(LoginRequiredWithErrorMessageMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
+        form.instance.current_weight = (
+            form.instance.roasted_weight
+        )  # set current weight to the roasted weight
         return super().form_valid(form)
 
 
@@ -141,6 +144,16 @@ class ExtractionCreateView(LoginRequiredWithErrorMessageMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
+        print("dose", form.instance.dose)
+        current_weight_error = form.instance.roasted_bean.decrement(form.instance.dose)
+        if current_weight_error:
+            response = super().form_invalid(form)
+            messages.warning(
+                self.request,
+                f"Only {current_weight_error} g of beans; select a smaller dose",
+            )
+            if self.request.accepts("text/html"):
+                return response
         return super().form_valid(form)
 
 
