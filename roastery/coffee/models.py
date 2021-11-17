@@ -133,9 +133,7 @@ class Extraction(TimeStampedModel):
         "Grinder", max_length=20, choices=Grinder.choices, default=Grinder.NICHE_ZERO
     )
     dose = models.DecimalField("Dose Weight [g]", decimal_places=1, max_digits=3)
-    grind_setting = models.DecimalField(
-        "Grinder Coarseness Setting", decimal_places=1, max_digits=3
-    )
+    grind_setting = models.DecimalField("Coarseness", decimal_places=1, max_digits=3)
     temperature = models.DecimalField(
         "Temperature of Extraction [°C]", decimal_places=1, max_digits=3
     )
@@ -144,7 +142,7 @@ class Extraction(TimeStampedModel):
         verbose_name="Created by User",
         on_delete=models.CASCADE,
     )
-    image = models.ImageField(upload_to="extraction/", null=True)
+    image = models.ImageField(upload_to="extraction/", null=True, blank=True)
     notes = models.TextField("Extra Notes", blank=True)
 
     def get_default_image(self, method):
