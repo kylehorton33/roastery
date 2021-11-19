@@ -45,6 +45,7 @@ class ExtractionForm(forms.ModelForm):
             )
 
         if self.action == "update":
+            self.helper.layout.append("image")
             self.helper.layout.append(
                 Div(
                     Submit("update", "Update", css_class="btn btn-warning mx-2"),
