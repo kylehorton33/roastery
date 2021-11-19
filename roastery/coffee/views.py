@@ -10,7 +10,7 @@ from django.views.generic import (
 )
 from django.views.generic.edit import DeleteView
 
-from .forms import RoastForm
+from .forms import ExtractionForm, RoastForm
 from .models import Bean, Extraction, Roast
 
 # CUSTOM MIXINS
@@ -131,20 +131,17 @@ class ExtractionDetailView(DetailView):
 
 class ExtractionCreateView(LoginRequiredWithErrorMessageMixin, CreateView):
     model = Extraction
-    fields = [
-        "roasted_bean",
-        "method",
-        "dose",
-        "grinder",
-        "grind_setting",
-        "temperature",
-        "notes",
-    ]
+    form_class = ExtractionForm
     permission_denied_message = "You're not allowed on this page without an account"
 
+    # pass user to ExtractionAddForm
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user_id"] = self.request.user.id
+        kwargs["action"] = "add"
+        return kwargs
+
     def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        print("dose", form.instance.dose)
         current_weight_error = form.instance.roasted_bean.decrement(form.instance.dose)
         if current_weight_error:
             response = super().form_invalid(form)
@@ -159,18 +156,16 @@ class ExtractionCreateView(LoginRequiredWithErrorMessageMixin, CreateView):
 
 class ExtractionUpdateView(UserPassesTestMixin, UpdateView):
     model = Extraction
-    fields = [
-        "roasted_bean",
-        "method",
-        "dose",
-        "grinder",
-        "grind_setting",
-        "temperature",
-        "notes",
-    ]
+    form_class = ExtractionForm
     permission_denied_message = "You can't make updates from this account"
     action = "Update"
     bootstrap_class = "warning"
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user_id"] = self.request.user.id
+        kwargs["action"] = "update"
+        return kwargs
 
     def test_func(self):
         return self.request.user == self.get_object().created_by
