@@ -1,0 +1,39 @@
+{% load crispy_forms_field %}
+
+<div class="form-group">
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    <input id="timer-input" name="{{ field.name }}" type="hidden">
+    <div class="d-flex justify-content-center">
+        <h3 id="timer-display">0.0</h3>
+        <button id="timer-btn" class="btn btn-dark mx-4">Start</button>
+    </div>
+</div>
+
+<script>
+    const button = document.getElementById("timer-btn")
+    const timerInput = document.getElementById("timer-input")
+    const timerDisplay = document.getElementById("timer-display")
+    let startTime, s, interval
+
+    var timer = () => {
+        var d = new Date();
+        s = ((d - startTime)/1000).toFixed(1)
+        timerDisplay.innerHTML = s
+        timerInput.value = s
+    }
+
+    button.addEventListener("click", (e) => {
+        event.preventDefault()
+        if (button.innerHTML == "Start") {
+            button.innerHTML = "Stop"
+            startTime = new Date()
+            interval = setInterval(timer, 10);
+        } else {
+            button.innerHTML = "Start"
+            clearInterval(interval)
+        }
+    })
+
+
+
+</script>

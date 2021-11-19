@@ -144,6 +144,9 @@ class Extraction(TimeStampedModel):
     )
     image = models.ImageField(upload_to="extraction/", null=True, blank=True)
     notes = models.TextField("Extra Notes", blank=True)
+    time = models.DecimalField(
+        "Time of Extraction [s]", decimal_places=1, max_digits=4, null=True, blank=True
+    )
 
     def get_default_image(self, method):
         return {

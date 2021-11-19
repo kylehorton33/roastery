@@ -1,8 +1,12 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Button, Column, Div, Hidden, Layout, Row, Submit
+from crispy_forms.layout import Button, Column, Div, Field, Hidden, Layout, Row, Submit
 from django import forms
 
 from .models import Extraction, Roast
+
+
+class ExtractionTimer(Field):
+    template = "coffee/extraction-timer.html"
 
 
 class RoastForm(forms.ModelForm):
@@ -21,6 +25,8 @@ class ExtractionForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = "post"
 
+        self.advanced = False
+
         self.helper.layout = Layout(
             "roasted_bean",
             Row(
@@ -37,6 +43,7 @@ class ExtractionForm(forms.ModelForm):
         )
 
         if self.action == "add":
+            self.helper.layout.append(ExtractionTimer("time"))
             self.helper.layout.append(
                 Div(
                     Submit("add", "Add", css_class="btn btn-success"),
@@ -45,6 +52,7 @@ class ExtractionForm(forms.ModelForm):
             )
 
         if self.action == "update":
+            self.helper.layout.append("time")
             self.helper.layout.append("image")
             self.helper.layout.append(
                 Div(
